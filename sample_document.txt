@@ -1,0 +1,34 @@
+Retrieval-Augmented Generation: An Overview
+
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with text generation. Instead of relying solely on knowledge stored in a language model's parameters, a RAG system retrieves relevant information from an external knowledge source at query time and uses that information to generate a more accurate, grounded response.
+
+How RAG Works
+
+A typical RAG pipeline has four main stages:
+
+1. Document Loading: Source documents (PDFs, text files, web pages, etc.) are loaded into memory and converted into a standard format the system can process.
+
+2. Chunking: Long documents are split into smaller, overlapping segments called chunks. This is necessary because embedding models and language models have limited context windows, and smaller chunks improve the precision of retrieval.
+
+3. Embedding and Indexing: Each chunk is converted into a numerical vector representation (an embedding) using an embedding model. These vectors are stored in a vector database, which allows for fast similarity search.
+
+4. Retrieval and Generation: When a user asks a question, the question itself is embedded into a vector. The system searches the vector database for the chunks whose embeddings are most similar to the question's embedding. These relevant chunks are then passed, along with the original question, to a language model, which generates an answer grounded in the retrieved content.
+
+Why Use RAG
+
+RAG systems have several advantages over using a language model alone:
+
+- Reduced hallucination: Because answers are grounded in retrieved source material, the model is less likely to invent facts.
+- Up-to-date information: The knowledge base can be updated without retraining the model.
+- Source attribution: Because the system knows which chunks were retrieved, it can cite where an answer came from.
+- Domain specialization: RAG allows a general-purpose model to answer questions about private or specialized documents it was never trained on.
+
+Common Tools
+
+LangChain is a popular framework for building RAG pipelines. It provides document loaders, text splitters, integrations with embedding models, and connectors to vector databases such as Chroma, FAISS, and Pinecone.
+
+Ollama is a tool that allows large language models to run locally on a user's machine. It can be used to serve both embedding models (for converting text into vectors) and chat models (for generating answers), which is useful for building RAG systems that do not depend on external API calls.
+
+Example Use Case
+
+A company might have hundreds of internal policy documents. Employees could ask a chatbot, "What is our policy on remote work?" A RAG system would retrieve the specific paragraphs from the relevant policy document and generate an answer citing that source, rather than the model guessing based on general knowledge of typical corporate policies.
